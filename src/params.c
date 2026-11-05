@@ -91,8 +91,6 @@ static int _send_cors_hdr (ice_http_t *http, ice_param_t *curr)
     if (strcasecmp (curr->name, "Access-Control-Allow-Origin") == 0)
     {
         if (strcmp (curr->value, "*") == 0)
-            curr->value = strdup (http->in_origin);
-        if (strcmp (curr->value, "*") == 0)
             params->flags |= ICE_HTTP_WILDCARD_ORIGIN;
         else
             params->flags &= ~ICE_HTTP_WILDCARD_ORIGIN;
@@ -523,7 +521,7 @@ ice_config_http_header_t default_headers[] =
     { .hdr = { .status = "2*",          .name = "Pragma",               .value = "no-cache" } },
     { .hdr = { .status = "2*",          .name = "Expires",              .value = "Thu, 19 Nov 1981 08:52:00 GMT" } },
     { .hdr = { .status = "2*",          .name = "Cache-Control",        .value = "no-store, no-cache, private" } },
-    { .hdr = { .status = "2*",          .name = "Vary",                 .value = "Origin" } },
+    { .hdr = { .status = "[23]*",      .name = "Vary",                 .value = "Origin" } },
     { .hdr = { .status = "[23]*",          .name = "Access-Control-Allow-Origin",
                                         .value = "*",
                                         .callback = _send_cors_hdr } },
